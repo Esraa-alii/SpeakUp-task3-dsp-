@@ -1,22 +1,28 @@
 jQuery(document).ready(function () {
     var $ = jQuery;
+    // myrevord -> custom var that hold some methods wa are going to use it to start and stop recording
     var myRecorder = {
       objects: {
         context: null,
         stream: null,
         recorder: null,
       },
+      // called each time the record button is pressed
       init: function () {
+        // check if the context is initialized or not 
         if (null === myRecorder.objects.context) {
+          // if the context is not initialized -> initialize it (context or webkit depending on the browser)
           myRecorder.objects.context = new (window.AudioContext ||
             window.webkitAudioContext)();
         }
       },
       start: function () {
+        // options -> allow mic and denied camera
         var options = { audio: true, video: false };
         navigator.mediaDevices
           .getUserMedia(options)
           .then(function (stream) {
+            //creare stream and store it locally : it will be used for stop recording
             myRecorder.objects.stream = stream;
             myRecorder.objects.recorder = new Recorder(
               myRecorder.objects.context.createMediaStreamSource(stream),
@@ -47,7 +53,7 @@ jQuery(document).ready(function () {
               var audioObject = $("<audio controls></audio>").attr("src", url);
   
               // Prepare the download link
-              var downloadObject = $("<a>&#9660;</a>")
+              var downloadObject = $("<form><a>&#9660;</a></form>")
                 .attr("href", url)
                 .attr("download", new Date().toUTCString() + ".wav");
   
@@ -73,6 +79,7 @@ jQuery(document).ready(function () {
       myRecorder.init();
   
       // Get the button state
+      // !! -> convert the string into bool
       var buttonState = !!$(this).attr("data-recording");
   
       // Toggle
@@ -82,6 +89,7 @@ jQuery(document).ready(function () {
         myRecorder.start();
       } else {
         // stop recording
+        // empty string refer to false 
         $(this).attr("data-recording", "");
         myRecorder.stop(listObject);
       }
