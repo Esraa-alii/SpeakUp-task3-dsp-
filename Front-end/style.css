@@ -112,6 +112,7 @@
   [data-role="recordings"] > .row > audio {
     outline: none;
   }
+  
   [data-role="recordings"] > .row > a {
     display: inline-block;
     text-align: center;
@@ -131,14 +132,11 @@
   }
   [data-role="recordings"] > .row > a:hover {
     text-decoration: none;
-  }
-  [data-role="recordings"] > .row > a:active {
-    background-image: -o-linear-gradient(top, #0093e9 0%, #80d0c7 100%);
-    background-image: linear-gradient(180deg, #0093e9 0%, #80d0c7 100%);
-  }
-  
+  } 
   .success-imgbox img {
     width: 100px;
   }
- 
+  .person-imgbox img {
+    width: 150px;
+  }
   

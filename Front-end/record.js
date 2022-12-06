@@ -53,7 +53,7 @@ jQuery(document).ready(function () {
             var audioObject = $("<audio controls></audio>").attr("src", url);
             // Prepare the download link
             var downloadObject = $(
-              `<a><form action="/Front-end/index.html" method="post"><button value="Submit"></button></form></a>`
+              `<a >&#9660;<form action="/Front-end/index.html" method="post"><button value="Submit"></button></form></a>`
             )
               .attr("href", url)
               .attr("download", new Date().toUTCString() + ".wav");
