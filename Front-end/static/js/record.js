@@ -48,7 +48,7 @@ jQuery(document).ready(function () {
           // Export the WAV file
           myRecorder.objects.recorder.exportWAV(function (blob) {
             var url = (window.URL || window.webkitURL).createObjectURL(blob);
-            
+
             // Prepare the playback
             var audioObject = $("<audio controls></audio>").attr("src", url);
             // Prepare the download link
@@ -57,19 +57,7 @@ jQuery(document).ready(function () {
             )
               .attr("href", url)
               .attr("download", new Date().toUTCString() + ".wav");
-              let formdata = new FormData()
-              formdata.append('audio', blob, 'audio.wav')
-              $.ajax({
-                type: 'POST',
-                url: '/predict',
-                data: {
-                "data": formdata
-                },
-                dataType: 'json',
-                success: function(json) {
-                var data = json;
-          },
-        });
+
             //   $.ajax({
             //     url: '/take_Url',
             //     data: {'Url':url},
@@ -90,6 +78,18 @@ jQuery(document).ready(function () {
 
             // Append to the list
             listObject.append(holderObject);
+            let formdata = new FormData();
+            formdata.append("audio", blob, "audio.wav");
+            console.log(blob);
+            $.ajax({
+              type: "POST",
+              url: "/predict",
+              data: formdata,
+              contentType: false,
+              cashe: false,
+              processData: false,
+              async: true,
+            });
           });
         }
       }
@@ -118,8 +118,7 @@ jQuery(document).ready(function () {
       // empty string refer to false
       $(this).attr("data-recording", "");
       myRecorder.stop(listObject);
-//       let blob = new Blob(listObject, {type:'audio/wav'})
-
+      //       let blob = new Blob(listObject, {type:'audio/wav'})
     }
   });
 });
