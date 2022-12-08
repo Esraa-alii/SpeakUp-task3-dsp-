@@ -13,7 +13,7 @@
     <img src="../Front-end/images/logo.png" alt="" class="logo">
     <h2>SpeakUp</h2>
     </div>
-    <div class="card_container">
+     <div class="card_container">
      
       <!-- *********************************************************************************************** -->
       <div class="identify_person_card">
@@ -52,11 +52,19 @@
           </div>
       </div>
       </div>  
-    </div>  
-
-
-    <script type="text/javascript" src="https://code.jquery.com/jquery.min.js"></script>
-    <script src="https://markjivko.com/dist/recorder.js"></script>
+    </div>
+    <select id="encodingTypeSelect">
+      <option value="wav"></option>
+      </select>
+      <div id="controls">
+        <button id="recordButton">Record</button>
+        <button id="stopButton" disabled>Stop</button>
+      </div>
+      <!-- <pre id="log"></pre>	 -->
+      <h2 id="result">{{result}}</h2>
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
     <script src="/static/js/record.js"></script>
+    <script src="https://cdn.rawgit.com/mattdiamond/Recorderjs/08e7abd9/dist/recorder.js"></script>
+    <script src="{{ url_for('static', filename='js/WebAudioRecorder.min.js') }}" ></script>
 </body>
 </html>

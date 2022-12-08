@@ -1,124 +1,163 @@
-jQuery(document).ready(function () {
-  var $ = jQuery;
-  // myrevord -> custom var that hold some methods wa are going to use it to start and stop recording
-  var myRecorder = {
-    objects: {
-      context: null,
-      stream: null,
-      recorder: null,
-    },
-    // called each time the record button is pressed
-    init: function () {
-      // check if the context is initialized or not
-      if (null === myRecorder.objects.context) {
-        // if the context is not initialized -> initialize it (context or webkit depending on the browser)
-        myRecorder.objects.context = new (window.AudioContext ||
-          window.webkitAudioContext)();
-      }
-    },
-    start: function () {
-      // options -> allow mic and denied camera
-      var options = { audio: true, video: false };
-      navigator.mediaDevices
-        .getUserMedia(options)
-        .then(function (stream) {
-          //creare stream and store it locally : it will be used for stop recording
-          myRecorder.objects.stream = stream;
-          myRecorder.objects.recorder = new Recorder(
-            myRecorder.objects.context.createMediaStreamSource(stream),
-            { numChannels: 1 }
-          );
-          myRecorder.objects.recorder.record();
-        })
-        .catch(function (err) {});
-    },
-    stop: function (listObject) {
-      if (null !== myRecorder.objects.stream) {
-        myRecorder.objects.stream.getAudioTracks()[0].stop();
-      }
-      if (null !== myRecorder.objects.recorder) {
-        myRecorder.objects.recorder.stop();
+//webkitURL is deprecated but nevertheless
+URL = window.URL || window.webkitURL;
 
-        // Validate object
-        if (
-          null !== listObject &&
-          "object" === typeof listObject &&
-          listObject.length > 0
-        ) {
-          // Export the WAV file
-          myRecorder.objects.recorder.exportWAV(function (blob) {
-            var url = (window.URL || window.webkitURL).createObjectURL(blob);
+var gumStream; //stream from getUserMedia()
+var recorder; //WebAudioRecorder object
+var input; //MediaStreamAudioSourceNode  we'll be recording
+var encodingType; //holds selected encoding for resulting audio (file)
+var encodeAfterRecord = true; // when to encode
 
-            // Prepare the playback
-            var audioObject = $("<audio controls></audio>").attr("src", url);
-            // Prepare the download link
-            var downloadObject = $(
-              `<a >&#9660;<form action="/Front-end/index.html" method="post"><button value="Submit"></button></form></a>`
-            )
-              .attr("href", url)
-              .attr("download", new Date().toUTCString() + ".wav");
+// shim for AudioContext when it's not avb.
+var AudioContext = window.AudioContext || window.webkitAudioContext;
+var audioContext; //new audio context to help us record
 
-            //   $.ajax({
-            //     url: '/take_Url',
-            //     data: {'Url':url},
-            //     type: 'POST',
-            // dataType: 'json',
-            //     success: function(response){
-            //         console.log(response);
-            //     },
-            //     error: function(error){
-            //         console.log(error);
-            //     }
-            // });
+var encodingTypeSelect = document.getElementById("encodingTypeSelect");
+var recordButton = document.getElementById("recordButton");
+var stopButton = document.getElementById("stopButton");
 
-            // Wrap everything in a row
-            var holderObject = $('<div class="row"></div>')
-              .append(audioObject)
-              .append(downloadObject);
+//add events to those 2 buttons
+recordButton.addEventListener("click", startRecording);
+stopButton.addEventListener("click", stopRecording);
 
-            // Append to the list
-            listObject.append(holderObject);
-            let formdata = new FormData();
-            formdata.append("audio", blob, "audio.wav");
-            console.log(blob);
-            $.ajax({
-              type: "POST",
-              url: "/predict",
-              data: formdata,
-              contentType: false,
-              cashe: false,
-              processData: false,
-              async: true,
-            });
-          });
-        }
-      }
-    },
-  };
+function startRecording() {
+  console.log("startRecording() called");
 
-  // Prepare the recordings list
-  var listObject = $('[data-role="recordings"]');
+  /*
+		Simple constraints object, for more advanced features see
+		https://addpipe.com/blog/audio-constraints-getusermedia/
+	*/
 
-  // Prepare the record button
-  $('[data-role="controls"] > button').click(function () {
-    // Initialize the recorder
-    myRecorder.init();
+  var constraints = { audio: true, video: false };
 
-    // Get the button state
-    // !! -> convert the string into bool
-    var buttonState = !!$(this).attr("data-recording");
+  /*
+    	We're using the standard promise based getUserMedia() 
+    	https://developer.mozilla.org/en-US/docs/Web/API/MediaDevices/getUserMedia
+	*/
 
-    // Toggle
-    if (!buttonState) {
-      // start recording
-      $(this).attr("data-recording", "true");
-      myRecorder.start();
-    } else {
-      // stop recording
-      // empty string refer to false
-      $(this).attr("data-recording", "");
-      myRecorder.stop(listObject);
-      //       let blob = new Blob(listObject, {type:'audio/wav'})
-    }
-  });
-});
+  navigator.mediaDevices
+    .getUserMedia(constraints)
+    .then(function (stream) {
+      /*
+			create an audio context after getUserMedia is called
+			sampleRate might change after getUserMedia is called, like it does on macOS when recording through AirPods
+			the sampleRate defaults to the one set in your OS for your playback device
+
+		*/
+      audioContext = new AudioContext();
+
+      //update the format
+      // document.getElementById("formats").innerHTML =
+      //   "Format: 2 channel " +
+      //   encodingTypeSelect.options[encodingTypeSelect.selectedIndex].value +
+      //   " @ " +
+      //   audioContext.sampleRate / 1000 +
+      //   "kHz";
+
+      //assign to gumStream for later use
+      gumStream = stream;
+
+      /* use the stream */
+      input = audioContext.createMediaStreamSource(stream);
+
+      //stop the input from playing back through the speakers
+      //input.connect(audioContext.destination)
+
+      //get the encoding
+      encodingType =
+        encodingTypeSelect.options[encodingTypeSelect.selectedIndex].value;
+
+      //disable the encoding selector
+      encodingTypeSelect.disabled = true;
+
+      recorder = new WebAudioRecorder(input, {
+        workerDir: "static/js/", // must end with slash
+        encoding: encodingType,
+        numChannels: 2, //2 is the default, mp3 encoding supports only 2
+        onEncoderLoading: function (recorder, encoding) {
+          // show "loading encoder..." display
+        },
+        onEncoderLoaded: function (recorder, encoding) {
+          // hide "loading encoder..." display
+        },
+      });
+
+      recorder.onComplete = function (recorder, blob) {
+        createDownloadLink(blob, recorder.encoding);
+        encodingTypeSelect.disabled = false;
+      };
+
+      recorder.setOptions({
+        timeLimit: 120,
+        encodeAfterRecord: encodeAfterRecord,
+        ogg: { quality: 0.5 },
+        mp3: { bitRate: 160 },
+      });
+
+      //start the recording process
+      recorder.startRecording();
+    })
+    .catch(function (err) {
+      //enable the record button if getUSerMedia() fails
+      recordButton.disabled = false;
+      stopButton.disabled = true;
+      console.log(err);
+    });
+
+  //disable the record button
+  recordButton.disabled = true;
+  stopButton.disabled = false;
+}
+
+function stopRecording() {
+  console.log("stopRecording() called");
+
+  //stop microphone access
+  gumStream.getAudioTracks()[0].stop();
+
+  //disable the stop button
+  stopButton.disabled = true;
+  recordButton.disabled = false;
+
+  //tell the recorder to finish the recording (stop recording + encode the recorded audio)
+  recorder.finishRecording();
+}
+
+async function createDownloadLink(blob, encoding) {
+  var url = URL.createObjectURL(blob);
+  let file = new File([blob], "file.wav");
+  console.log(file);
+  const formData = new FormData();
+
+  var h = document.getElementById("result");
+  formData.append("file", file);
+
+  await axios
+    .post("/predict", formData)
+    .then((res) => {
+      console.log(res);
+      h.innerHTML = res.data;
+      console.log(h);
+    })
+    .catch((e) => {
+      console.log(e);
+    });
+  var au = document.createElement("audio");
+  var li = document.createElement("li");
+  var link = document.createElement("a");
+
+  //add controls to the <audio> element
+  au.controls = true;
+  au.src = url;
+
+  //link the a element to the blob
+  link.href = url;
+  link.download = new Date().toISOString() + "." + encoding;
+  link.innerHTML = link.download;
+
+  //add the new audio and a elements to the li element
+  li.appendChild(au);
+  li.appendChild(link);
+
+  //add the li element to the ordered list
+  recordingsList.appendChild(li);
+}
