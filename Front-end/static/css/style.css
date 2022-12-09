@@ -27,6 +27,7 @@
     justify-content: space-evenly;
     align-content: center;
     margin-top: -42px;
+    margin-left: 215px;
   }
   .identify_person_card {
     width: 40%;
@@ -82,7 +83,35 @@
     background-image: -o-linear-gradient(bottom, #4c474c 0%, #141414 100%);
     border-radius: 50px;
   }
-  [data-role="controls"] > button {
+  #recordButton{
+    width: 63px;
+    height: 63px;
+    /* padding: 10px; */
+    border: 2px transparent;
+    background-color: #4e6b26;
+    border-radius: 50%;
+    color: white;
+    font-size: medium;
+  }
+  #stopButton{
+    width: 63px;
+    height: 63px;
+    /* padding: 10px; */
+    border: 2px transparent;
+    background-color: rgb(154, 15, 15);
+    border-radius: 50%;
+    color: white;
+    font-size: medium;
+
+  }
+#encodingTypeSelect{
+  display: none;
+}
+li{
+display: none;
+}
+
+  /* #recordButton {
     margin: 50px auto;
     outline: none;
     border: none;
@@ -98,12 +127,12 @@
     box-shadow: 0px 5px 5px 2px rgba(0, 0, 0, 0.3) inset, 0px 0px 0px 30px #fff,
       0px 0px 0px 35px #333;
   }
-  [data-role="controls"] > button:hover {
+  #recordButton:hover {
     background-color: rgb(193, 173, 59);
   }
-  [data-role="controls"] > button[data-recording="true"] {
+#recordButton:active{
     background-color: rgb(193, 173, 59);
-  }
+  } */
   [data-role="recordings"] > .row {
     width: auto;
     height: auto;
@@ -139,4 +168,9 @@
   .person-imgbox img {
     width: 150px;
   }
-  
+  #success{
+    display: none;;
+  }
+  #fail{
+    display: none;
+  }

@@ -10,7 +10,7 @@
 </head>
 <body>
     <div class="logo-container">
-    <img src="../Front-end/images/logo.png" alt="" class="logo">
+    <img src="../static/images/logo.png" alt="" class="logo">
     <h2>SpeakUp</h2>
     </div>
      <div class="card_container">
@@ -22,33 +22,28 @@
         </div>
         <div class="card-body">
           <h2>Record audio</h2>
-          <div class="holder">
-            <div data-role="controls">
-                <button>Record</button>
-            </div>
-            <div data-role="recordings"></div>
-        </div>
-            
-          <a href="#" class="btn btn-primary">Check here</a>
-
+          <div>
+            <button id="recordButton">Record</button>
+            <button id="stopButton" disabled>Stop</button>
+          </div>
           <!-- ******************************** success case ********************************** -->
-          <div >
+          <div id="success" >
             <div class="success-imgbox">
-              <img src="./images/checked.png" alt="" class="img">
+              <img src="../static/images/checked.png" alt="" class="img">
             </div>
             <div class="title">
-              <h3>Success!</h3>
+              <h3 >Success!</h3>
             </div>
-            <p class="para">User is speaking <br>
+            <p class="para" id="result">{{result}} is speaking <br>
               Door will open now </p>
         </div>
           <!-- ******************************** fail case ********************************** -->
-        <div >
+        <div id="fail">
           <div class="success-imgbox">
-            <img src="./images/cancel.png" alt="" class="img">
+            <img src="../static/images/cancel.png" alt="" class="img">
           </div>
           <div class="title">
-            <h3>Fail!</h3>
+            <h3 >Fail!</h3>
           </div>
       </div>
       </div>  
@@ -56,12 +51,9 @@
     <select id="encodingTypeSelect">
       <option value="wav"></option>
       </select>
-      <div id="controls">
-        <button id="recordButton">Record</button>
-        <button id="stopButton" disabled>Stop</button>
-      </div>
+    
       <!-- <pre id="log"></pre>	 -->
-      <h2 id="result">{{result}}</h2>
+      <ol id="recordingsList"></ol>
     <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
     <script src="/static/js/record.js"></script>
     <script src="https://cdn.rawgit.com/mattdiamond/Recorderjs/08e7abd9/dist/recorder.js"></script>

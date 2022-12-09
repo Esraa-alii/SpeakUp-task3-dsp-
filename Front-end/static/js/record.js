@@ -7,6 +7,8 @@ var input; //MediaStreamAudioSourceNode  we'll be recording
 var encodingType; //holds selected encoding for resulting audio (file)
 var encodeAfterRecord = true; // when to encode
 
+var success = document.getElementsByClassName("success");
+var fails = document.getElementsByClassName("fail");
 // shim for AudioContext when it's not avb.
 var AudioContext = window.AudioContext || window.webkitAudioContext;
 var audioContext; //new audio context to help us record
@@ -137,6 +139,13 @@ async function createDownloadLink(blob, encoding) {
       console.log(res);
       h.innerHTML = res.data;
       console.log(h);
+      if (res.data == 0) {
+        document.getElementById("success").style.display = "none";
+        document.getElementById("fail").style.display = "block";
+      } else {
+        document.getElementById("success").style.display = "block";
+        document.getElementById("fail").style.display = "none";
+      }
     })
     .catch((e) => {
       console.log(e);

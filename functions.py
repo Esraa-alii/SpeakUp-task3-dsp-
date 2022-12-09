@@ -224,7 +224,7 @@ def extract_features(files, name="allvoices"):
     # Loads the audio file as a floating point time series and assigns the default sample rate
     # Sample rate is set to 22050 by default
     try:
-        X, sample_rate = librosa.load(file_name, res_type='kaiser_fast')
+        X, sample_rate = librosa.load(file_name)
     except:
         print(files)
     # Generate Mel-frequency cepstral coefficients (MFCCs) from a time series
