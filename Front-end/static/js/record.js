@@ -16,7 +16,7 @@ var audioContext; //new audio context to help us record
 var encodingTypeSelect = document.getElementById("encodingTypeSelect");
 var recordButton = document.getElementById("recordButton");
 var stopButton = document.getElementById("stopButton");
-
+var timer = document.getElementById("timer");
 //add events to those 2 buttons
 recordButton.addEventListener("click", startRecording);
 stopButton.addEventListener("click", stopRecording);
@@ -170,3 +170,43 @@ async function createDownloadLink(blob, encoding) {
   //add the li element to the ordered list
   recordingsList.appendChild(li);
 }
+
+// let timerId;
+
+// recordButton.addEventListener('click', function() {
+// 	setInterval(function() {
+// 		let date = new Date;
+// 		console.log(date.getMinutes() + ' ' + date.getSeconds());
+// 	}, 1000);
+// });
+
+// stopButton.addEventListener('click', function() {
+// 	clearInterval(timerId);
+// });
+
+(i = 0), (a = 0);
+var min = 0;
+recordButton.onclick = () => {
+  if (a == 0) {
+    a = a + 1;
+    sec = setInterval(start, 60);
+    function start() {
+      timer.innerHTML = "0"+min+" : " + i;
+      i++;
+      if (i==60){
+        min++
+        i=0;
+      }
+    }
+   
+  }
+};
+
+stopButton.onclick = () => {
+  clearInterval(c);
+  i = 0;
+  a = 0;
+  min=0;
+
+  output.innerHTML = "00 : " + 00;
+};
