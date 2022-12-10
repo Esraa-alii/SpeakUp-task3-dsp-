@@ -191,22 +191,21 @@ recordButton.onclick = () => {
     a = a + 1;
     sec = setInterval(start, 60);
     function start() {
-      timer.innerHTML = "0"+min+" : " + i;
+      timer.innerHTML = "0" + min + " : " + i;
       i++;
-      if (i==60){
-        min++
-        i=0;
+      if (i == 60) {
+        min++;
+        i = 0;
       }
     }
-   
   }
 };
 
 stopButton.onclick = () => {
-  clearInterval(c);
+  clearInterval(sec);
   i = 0;
   a = 0;
-  min=0;
+  min = 0;
 
-  output.innerHTML = "00 : " + 00;
+  timer.innerHTML = "00 : " + 00;
 };

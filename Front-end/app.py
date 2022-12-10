@@ -33,7 +33,7 @@ x = None
 
 @app.route("/")
 def man():
-    return render_template('index.html', result=x)
+    return render_template('poster.html', result=x)
 
 
 @app.route("/predict", methods=['POST', 'GET'])
