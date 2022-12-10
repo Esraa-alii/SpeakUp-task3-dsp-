@@ -72,80 +72,16 @@
       border-radius: 15px;
   }
   
-  
   .Demo_box h3{
-      color: #5c5f58;
-      z-index: 9;
+    color: #5c5f58;
+    z-index: 9;
+    margin-top: 15px;
+    margin-left: 30px;
   }
   .Demo_box p{
       justify-content: center;
       font-size: larger;
   }
-  
-  .holder {
-    /* position: absolute; */
-      background-image: -o-linear-gradient(bottom, #4c474c 0%, #141414 100%);
-      border-radius: 50px;
-      z-index: 8;
-      
-    }
-    [data-role="controls"] > button {
-      z-index: 99;
-      margin: 50px 0px;
-      /* margin-bottom: 0%; */
-      outline: none;
-      border: none;
-      background-color: #d9afd9;
-      background-color: #bd5448;
-      width: 50px;
-      height: 50px;
-      border-radius: 50%;
-      text-indent: -1000em;
-      cursor: pointer;
-      -webkit-box-shadow: 0px 5px px 2px rgba(0, 0, 0, 0.3) inset,
-        0px 0px 0px 100px #fff, 0px 0px 0px 35px #333;
-      box-shadow: 0px 5px 5px 2px rgba(0, 0, 0, 0.3) inset, 0px 0px 0px 30px #fff,
-        0px 0px 0px 35px #333;
-    }
-    [data-role="controls"] > button:hover {
-      background-color: rgb(193, 173, 59);
-    }
-    [data-role="controls"] > button[data-recording="true"] {
-      background-color: rgb(193, 173, 59);
-    }
-    [data-role="recordings"] > .row {
-      width: auto;
-      height: auto;
-      padding: 20px;
-    }
-    [data-role="recordings"] > .row > audio {
-      outline: none;
-      width: 293px;
-      z-index: 10;
-  
-    }
-    
-    [data-role="recordings"] > .row > a {
-      display: inline-block;
-      text-align: center;
-      font-size: 20px;
-      line-height: 50px;
-      vertical-align: middle;
-      width: 90px;
-      height: 50px;
-      border-radius: 20px;
-      color: #fff;
-      font-weight: bold;
-      text-decoration: underline;
-      background-color: #5c5f58;
-      margin-left: 100px;
-      margin-top: -115px;
-      cursor: pointer;
-      z-index: 100;
-      text-decoration: none;
-  
-  }
-    
     .success-imgbox{
       display: flex;
       position: absolute;
@@ -158,16 +94,24 @@
     }
    .fail-imgbox img{
     width: 100px;
+    margin-right: 30px;
    }
-   .fail{
-     position: absolute;
-     top: 480px;
-     left: 660px;
-   }
-   .fail h3{
+ .fail-imgbox{
+  display: flex;
+  position: absolute;
+  top: 260px;
+  left: 580px;
+ }
+#fail h3{
+  position: absolute;
+  top: 290px;
+  left: 700px;
+}
+
+   /* .fail h3{
     /* position: absolute; */
-    left: 680px;
-   }
+    /* left: 680px; */
+   /* } */ 
    .thirdcol {
     margin-right: 6px;
   } 
@@ -205,4 +149,35 @@
   }
   #Conclusion{
     height: 255px;
+  }
+  #recordButton{
+    width: 76px;
+    height: 76px;
+    /* padding: 10px; */
+    border: 2px transparent;
+    background-color: #4e6b26;
+    border-radius: 50%;
+    color: white;
+    font-size: larger;
+    margin-top: 15px;
+  }
+  #stopButton{
+    width:76px;
+    height: 76px;
+    /* padding: 10px; */
+    border: 2px transparent;
+    background-color: rgb(154, 15, 15);
+    border-radius: 50%;
+    color: white;
+    font-size: larger;
+    margin-top: 15px;
+
+  }
+  #fail{
+    display: none;
+
+  }
+  #success{
+    display: none;
+
   }

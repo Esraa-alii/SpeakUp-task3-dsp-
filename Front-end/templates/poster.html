@@ -33,13 +33,12 @@
         <div class="secondcol">
             <div class="Demo_box">
                 <!-- <h3>Demo</h3> -->
-                <div class="holder">
-                    <div data-role="controls">
-                        <button>Record</button>
-                    </div>
-                    <div data-role="recordings"></div>
+                <div>
+                  <button id="recordButton">Record</button>
+                  <button id="stopButton" disabled>Stop</button>
+                  <h3 id="timer"></h3>
                 </div>
-                <div >
+                <div id="success">
                     <div class="success-imgbox">
                       <img src="../static/images/checked.png" alt="" class="img">
                     <div>
@@ -52,14 +51,14 @@
                     </div>
                 </div>
                   <!-- ******************************** fail case ********************************** -->
-                <!-- <div class="fail">
+                <div id="fail">
                   <div class="fail-imgbox">
-                    <img src="../images/cancel.png" alt="" class="img">
+                    <img src="../static/images/cancel.png" alt="" class="img">
                   </div>
                   <div class="title">
                     <h3>Fail!</h3>
                   </div>
-              </div> -->
+              </div>
             </div>
             <div class="graph_box">
                 <h3>Accuracy</h3>
@@ -82,10 +81,13 @@
             </div>
         </div>
     </div>
-    
+    <ol id="recordingsList"></ol>
 <script src="https://canvasjs.com/assets/script/canvasjs.min.js"></script>
 <script type="text/javascript" src="https://code.jquery.com/jquery.min.js"></script>
 <script src="https://markjivko.com/dist/recorder.js"></script>
+<script src="https://cdn.rawgit.com/mattdiamond/Recorderjs/08e7abd9/dist/recorder.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+
 <script src="../static/js/record.js"></script>   
 <script src="../static/js/graphs.js"></script>
 </body>
