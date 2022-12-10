@@ -220,7 +220,7 @@ def extract_features(files, name="allvoices"):
 
     # Sets the name to be the path to where the file is in my computer
     audio_file = glob(
-        "C:/Users/nasse/OneDrive/Desktop/New folder (5)/SpeakUp-task3-dsp-/voices/allvoices/file.wav")
+        "C:/Users/nasse/OneDrive/Desktop/New folder (5)/SpeakUp-task3-dsp-/Speaker_Recognition/voices/allvoices/file.wav")
     y, sr = librosa.load(audio_file[0], res_type='kaiser_fast')
     X = y
     sample_rate = sr
@@ -259,4 +259,47 @@ def feat(features_label):
         features.append(np.concatenate((features_label[i][0], features_label[i][1],
                                         features_label[i][2], features_label[i][3],
                                         features_label[i][4]), axis=0))
+    return features
+
+
+def extract_features_of_speech(files, name="allwords"):
+
+    # Sets the name to be the path to where the file is in my computer
+    audio_file = glob(
+        "C:/Users/nasse/OneDrive/Desktop/New folder (5)/SpeakUp-task3-dsp-/Speaker_Recognition/voices/allvoices/file.wav")
+    y, sr = librosa.load(audio_file[0], res_type='kaiser_fast')
+    X = y
+    sample_rate = sr
+
+    # Loads the audio file as a floating point time series and assigns the default sample rate
+    # Sample rate is set to 22050 by default
+    # Generate Mel-frequency cepstral coefficients (MFCCs) from a time series
+    mfccs = np.mean(mfcc(y=X, sr=sample_rate, n_mfcc=40).T, axis=0)
+
+    # Generates a Short-time Fourier transform (STFT) to use in the chroma_stft
+    stft = np.abs(librosa.stft(X))
+
+    # Computes a chromagram from a waveform or power spectrogram.
+    chroma = np.mean(librosa.feature.chroma_stft(
+        S=stft, sr=sample_rate).T, axis=0)
+    zcr = np.mean(librosa.feature.zero_crossing_rate(X).T, axis=0)
+    rolloff = np.mean(librosa.feature.spectral_rolloff(
+        X, sr=sample_rate).T, axis=0)
+    rmse = np.mean(librosa.feature.rms(y=X).T, axis=0)
+    spec_cent = np.mean(librosa.feature.spectral_centroid(
+        X, sr=sample_rate).T, axis=0)
+    spec_bw = np.mean(librosa.feature.spectral_bandwidth(
+        X, sr=sample_rate).T, axis=0)
+
+    label = "0"
+
+    return mfccs, chroma, zcr, rmse, spec_bw, spec_cent, rolloff, label
+
+
+def feat_of_speech(features_label):
+    features = []
+    for i in range(0, len(features_label)):
+        features.append(np.concatenate((features_label[i][0], features_label[i][1],
+                                        features_label[i][2], features_label[i][3],
+                                        features_label[i][4], features_label[i][5], features_label[i][6]), axis=0))
     return features
