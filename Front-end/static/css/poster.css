@@ -54,7 +54,7 @@
   }
   .Dtree{
   width: 380px;
-  /* height: 200px; */
+ height: 289px;
   }
   
   .Demo_box{
@@ -132,7 +132,7 @@
     }
   .graph_box{
     width: 490px;
-    /* height: 320px; */
+    height: 320px; 
     padding: 5px;
     display: flex;
     border: 2px solid #bd5448;
@@ -148,7 +148,7 @@
     color: #5c5f58;
   }
   #Conclusion{
-    height: 255px;
+    height: 317px;
   }
   #recordButton{
     width: 76px;

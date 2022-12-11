@@ -107,9 +107,7 @@
 #encodingTypeSelect{
   display: none;
 }
-li{
-display: none;
-}
+
 
   /* #recordButton {
     margin: 50px auto;
@@ -173,4 +171,9 @@ display: none;
   }
   #fail{
     display: none;
+  }
+
+  .spectro{
+    width: 300px;
+    height: 300px;
   }

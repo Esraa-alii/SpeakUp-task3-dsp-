@@ -135,17 +135,22 @@ async function createDownloadLink(blob, encoding) {
 
   await axios
     .post("/predict", formData)
-    .then((res) => {
-      console.log(res);
+    .then(async (res) => {
+      //await location.reload(true);
+      console.log(res.data, res.statusText);
       h.innerHTML = res.data;
-      console.log(h);
-      if (res.data == 0) {
-        document.getElementById("success").style.display = "none";
-        document.getElementById("fail").style.display = "block";
-      } else {
-        document.getElementById("success").style.display = "block";
-        document.getElementById("fail").style.display = "none";
-      }
+      body = document.getElementsByTagName("body");
+      body.innerHTML = res;
+      // //var img = document.createElement("img");
+      // //img.src = "static/images/spectro.png";
+      // //document.getElementById("chartContainer").appendChild(img);
+      // if (res.data == 0 || res.statusText == "other") {
+      //   document.getElementById("success").style.display = "none";
+      //   document.getElementById("fail").style.display = "block";
+      // } else {
+      //   document.getElementById("success").style.display = "block";
+      //   document.getElementById("fail").style.display = "none";
+      // }
     })
     .catch((e) => {
       console.log(e);
