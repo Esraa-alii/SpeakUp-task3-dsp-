@@ -45,13 +45,26 @@
       flex-wrap: wrap;
       border-radius: 15px;
   }
-  .content_box h3{
+  .content_box h3,.method_boxx h3{
       color: #5c5f58;
   }
-  .content_box p{
+  .content_box p , .method_boxx p{
       justify-content: center;
       font-size: larger;
   }
+.method_box{
+  width: 450px;
+  padding: 6px;
+  display: flex;
+  border: 2px solid #bd5448;
+  margin-top: 2px;
+  margin-left: 6px;
+  margin-bottom: 10px;
+  background-color: #fff;
+  justify-content: center;
+  flex-wrap: wrap;
+  border-radius: 15px;
+}
   .Dtree{
   width: 380px;
  height: 289px;

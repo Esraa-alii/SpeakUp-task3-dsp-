@@ -1,6 +1,6 @@
 window.onload = function() {
 
-    var chart = new CanvasJS.Chart("chartContainer", {
+    var accuracyChart = new CanvasJS.Chart("accChart", {
         theme: "light1", // "light1", "light2", "dark1", "dark2"
         exportEnabled: true,
         animationEnabled: true,
@@ -20,6 +20,42 @@ window.onload = function() {
             ]
         }]
     });
-    chart.render();
+    accuracyChart.render();
+
+
+        var mcfccGraph = new CanvasJS.Chart("mcfccChart", {
+          theme: "light1", // "light1", "light2", "dark1"
+          animationEnabled: true,
+          exportEnabled: true,
+          title: {
+            text: "Average of the mcfcc feature"
+          },
+          axisX: {
+            margin: 10,
+            labelPlacement: "inside",
+            tickPlacement: "inside"
+          },
+          axisY2: {
+            
+            titleFontSize: 14,
+            includeZero: true,
+            suffix: "bn"
+          },
+          data: [{
+            type: "bar",
+            axisYType: "secondary",
+            yValueFormatString: "#,###.##",
+            indexLabel: "{y}",
+            dataPoints: [
+                //add var from backend insted of each y
+              { label: "Esraa", y: 4.25 },
+              { label: "Mariam", y: 4.00 },
+              { label: "Nasser", y: 3.93 },
+              { label: "Abdelrahman", y: 3.72 },
+              
+            ]
+          }]
+        });
+        mcfccGraph.render();
     
     }
