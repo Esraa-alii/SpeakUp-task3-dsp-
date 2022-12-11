@@ -129,7 +129,8 @@
     margin-right: 6px;
   } 
   .spectro_box{
-    height: 320px;
+    width: 450px;
+    height: 360px;
     padding: 5px;
     display: flex;
     border: 2px solid #bd5448;

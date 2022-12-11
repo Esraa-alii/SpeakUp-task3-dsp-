@@ -27,9 +27,7 @@ window.onload = function() {
           theme: "light1", // "light1", "light2", "dark1"
           animationEnabled: true,
           exportEnabled: true,
-          title: {
-            text: "Average of the mcfcc feature"
-          },
+          
           axisX: {
             margin: 10,
             labelPlacement: "inside",
@@ -39,7 +37,7 @@ window.onload = function() {
             
             titleFontSize: 14,
             includeZero: true,
-            suffix: "bn"
+            suffix: ""
           },
           data: [{
             type: "bar",
