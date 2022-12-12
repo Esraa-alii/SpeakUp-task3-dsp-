@@ -7,9 +7,9 @@ import matplotlib.pyplot as plt
 import scipy.io.wavfile as wavfile
 from functions import extract_features, feat, extract_features_of_speech, feat_of_speech
 import pickle
-from PIL import Image
-import base64
-import io
+from playsound import playsound
+from gtts import gTTS
+from pygame import mixer
 
 
 def test():
@@ -33,10 +33,6 @@ def test():
     plt.xlabel('Time')
     plt.ylabel('Frequency')
     plt.savefig('static/images/spectro.png')
-    #im = Image.open("static/images/spectro.png")
-    #data = io.BytesIO()
-    #im.save(data, "JPEG")
-    #encoded_img_data = base64.b64encode(data.getvalue())
     plt.close()
     return speakmodel.predict(features1).reshape(1, -1)[0][0], speechmodel.predict(features2).reshape(1, -1)[0][0]
 
@@ -57,8 +53,24 @@ def predict():
         "../Speaker_Recognition/voices/allvoices", "file.wav")
     file.save(file_path)
     x, y = test()
+
+    # os.remove(
+    #    'C:/Users/nasse/OneDrive/Desktop/New folder (5)/SpeakUp-task3-dsp-/Front-end/exam.mp3')
+    language = 'en'
     print(x, y)
-    return render_template('poster.html')
+    text_val = ""
+    if x == "0" or y == "other":
+        text_val = 'access denied'
+    elif x == 'Abdo':
+        text_val = 'Abdo'
+    elif x == 'Esraa':
+        text_val = 'Esraa'
+    else:
+        text_val = 'Mariam'
+    obj = gTTS(text=text_val, lang=language)
+    obj.save("exam.mp3")
+    playsound("exam.mp3")
+    return x, y
 
 
 if __name__ == "__main__":

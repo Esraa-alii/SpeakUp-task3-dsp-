@@ -137,20 +137,20 @@ async function createDownloadLink(blob, encoding) {
     .post("/predict", formData)
     .then(async (res) => {
       //await location.reload(true);
+      location.reload(true);
       console.log(res.data, res.statusText);
-      h.innerHTML = res.data;
-      body = document.getElementsByTagName("body");
-      body.innerHTML = res;
-      // //var img = document.createElement("img");
-      // //img.src = "static/images/spectro.png";
-      // //document.getElementById("chartContainer").appendChild(img);
-      // if (res.data == 0 || res.statusText == "other") {
-      //   document.getElementById("success").style.display = "none";
-      //   document.getElementById("fail").style.display = "block";
-      // } else {
-      //   document.getElementById("success").style.display = "block";
-      //   document.getElementById("fail").style.display = "none";
-      // }
+      //h.innerHTML = res.data;
+
+      //var img = document.createElement("img");
+      //img.src = "static/images/spectro.png";
+      //document.getElementById("chartContainer").appendChild(img);
+      if (res.data == 0 || res.statusText == "other") {
+        document.getElementById("success").style.display = "none";
+        document.getElementById("fail").style.display = "block";
+      } else {
+        document.getElementById("success").style.display = "block";
+        document.getElementById("fail").style.display = "none";
+      }
     })
     .catch((e) => {
       console.log(e);
