@@ -54,22 +54,17 @@ def predict():
     file.save(file_path)
     x, y = test()
 
-    # os.remove(
-    #    'C:/Users/nasse/OneDrive/Desktop/New folder (5)/SpeakUp-task3-dsp-/Front-end/exam.mp3')
-    language = 'en'
     print(x, y)
-    text_val = ""
+
     if x == "0" or y == "other":
-        text_val = 'access denied'
+        playsound("acces.mp3")
     elif x == 'Abdo':
-        text_val = 'Abdo'
+        playsound("abdo.mp3")
     elif x == 'Esraa':
-        text_val = 'Esraa'
+        playsound("Esraa.mp3")
     else:
-        text_val = 'Mariam'
-    obj = gTTS(text=text_val, lang=language)
-    obj.save("exam.mp3")
-    playsound("exam.mp3")
+        playsound("Mariam.mp3")
+
     return x, y
 
 

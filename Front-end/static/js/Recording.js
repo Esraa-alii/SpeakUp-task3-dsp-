@@ -144,13 +144,13 @@ async function createDownloadLink(blob, encoding) {
       //var img = document.createElement("img");
       //img.src = "static/images/spectro.png";
       //document.getElementById("chartContainer").appendChild(img);
-      if (res.data == 0 || res.statusText == "other") {
-        document.getElementById("success").style.display = "none";
-        document.getElementById("fail").style.display = "block";
-      } else {
-        document.getElementById("success").style.display = "block";
-        document.getElementById("fail").style.display = "none";
-      }
+      // if (res.data == 0 || res.statusText == "other") {
+      //   document.getElementById("success").style.display = "none";
+      //   document.getElementById("fail").style.display = "block";
+      // } else {
+      //   document.getElementById("success").style.display = "block";
+      //   document.getElementById("fail").style.display = "none";
+      // }
     })
     .catch((e) => {
       console.log(e);
