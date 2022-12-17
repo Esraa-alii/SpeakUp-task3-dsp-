@@ -3,6 +3,7 @@ import librosa
 import scipy
 import os
 from glob import glob
+import pydotplus
 
 
 def power_to_db(S, ref=1.0, amin=1e-10, top_db=80.0):
